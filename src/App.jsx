@@ -1,18 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import ContactForm from "./components/ContactForm";
 import SearchBox from "./components/SearchBox";
 import ContactList from "./components/ContactList";
 import { BookOpen } from "lucide-react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchContacts } from "./redux/contactsOps";
+import { selectError, selectLoading } from "./redux/contactsSlice";
 
 function App() {
   const dispatch = useDispatch();
+  const isLoading = useSelector(selectLoading);
+  const error = useSelector(selectError);
 
   useEffect(() => {
-    dispatch(fetchContacts);
+    dispatch(fetchContacts());
   }, [dispatch]);
-  
+
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6">
       <div className="max-w-md mx-auto">
@@ -25,8 +28,19 @@ function App() {
           <h1 className="text-3xl font-bold text-gray-900">Phonebook</h1>
         </div>
 
+        {error && (
+          <div className="mb-4 p-4 bg-red-100 text-red-700 rounded-md">
+            {error}
+          </div>
+        )}
+
         <ContactForm />
         <SearchBox />
+        {isLoading && (
+          <div className="flex justify-center my-4">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          </div>
+        )}
         <ContactList />
       </div>
     </div>

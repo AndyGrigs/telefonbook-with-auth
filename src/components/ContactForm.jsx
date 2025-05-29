@@ -3,7 +3,8 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
-import { addContact, selectContacts } from "../redux/contactsSlice";
+import { selectContacts } from "../redux/contactsSlice";
+import { addContact } from "../redux/contactsOps";
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -38,7 +39,6 @@ const ContactForm = () => {
           }
 
           const newContact = {
-            id: nanoid(),
             name: values.name.trim(),
             number: values.number.trim(),
           };

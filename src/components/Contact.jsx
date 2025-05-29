@@ -1,7 +1,7 @@
 import React from "react";
 import { Phone, Trash2 } from "lucide-react";
 import { useDispatch } from "react-redux";
-import { deleteContact } from "../redux/contactsSlice";
+import { deleteContact } from "../redux/contactsOps";
 
 const Contact = ({ contact }) => {
   const dispatch = useDispatch();
