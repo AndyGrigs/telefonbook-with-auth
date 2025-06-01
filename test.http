@@ -1,0 +1,18 @@
+###
+POST https://connections-api.goit.global/users/signup
+Content-Type: application/json
+
+{
+  "name": "Adriano Crossi",
+  "email": "acrossiiii@mail.com",
+  "password": "ewe12345"
+}
+
+###
+POST https://connections-api.goit.global/users/login
+Content-Type: application/json
+
+ {
+    "email": "acrossiiii@mail.com",
+    "password": "ewe12345"
+ }

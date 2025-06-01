@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, lazy } from "react";
 import ContactForm from "./components/ContactForm";
 import SearchBox from "./components/SearchBox";
 import ContactList from "./components/ContactList";
@@ -16,6 +16,12 @@ function App() {
     dispatch(fetchContacts());
   }, [dispatch]);
 
+  const HomePage = lazy(() => import("./pages/HomePage.jsx"));
+  const RegisterPage = lazy(() => import("./pages/RegisterPage.jsx"));
+  const LoginPage = lazy(() => import("./pages/LoginPage.jsx"));
+  const ContactsPage = lazy(() => import("./pages/ContactsPage.jsx"));
+
+  
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6">
       <div className="max-w-md mx-auto">
