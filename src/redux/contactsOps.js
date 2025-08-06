@@ -1,7 +1,9 @@
+// src/redux/contactsOps.js
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://6837545a2c55e01d18498894.mockapi.io';
+// Тепер використовуємо той же API що й для авторизації
+// axios.defaults.baseURL вже встановлений в authOperations.js
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchAll',
