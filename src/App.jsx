@@ -1,57 +1,63 @@
-import { useEffect, lazy, Suspense } from "react";
-import { Router, Routes, Route } from "react-router-dom";
-
+// src/App.jsx
+import React, { useEffect, Suspense } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchContacts } from "./redux/contactsOps";
-import { selectError, selectLoading } from "./redux/contactsSlice";
-import Layout from "./components/Layout.jsx";
+import { refreshUser } from "./redux/auth/authOperations";
+import { selectIsRefreshing } from "./redux/auth/authSelectors";
+import Layout from "./components/Layout";
+import PrivateRoute from "./components/PrivateRoute";
+import RestrictedRoute from "./components/RestrictedRoute";
+import HomePage from "./pages/HomePage";
+import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
+import ContactsPage from "./pages/ContactsPage";
 
+const LoadingSpinner = () => (
+  <div className="flex justify-center items-center h-screen">
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+  </div>
+);
 
 function App() {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectLoading);
-  const error = useSelector(selectError);
+  const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
 
-  const HomePage = lazy(() => import("./pages/HomePage.jsx"));
-  const RegisterPage = lazy(() => import("./pages/RegisterPage.jsx"));
-  const LoginPage = lazy(() => import("./pages/LoginPage.jsx"));
-  const ContactsPage = lazy(() => import("./pages/ContactsPage.jsx"));
-
-  
-  return (
-     <Router>
-      <Suspense fallback='loading...'>
+  return isRefreshing ? (
+    <LoadingSpinner />
+  ) : (
+    <Router>
+      <Suspense fallback={<LoadingSpinner />}>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
-            {/* <Route
+            <Route
               path="/register"
               element={
                 <RestrictedRoute redirectTo="/contacts">
                   <RegisterPage />
                 </RestrictedRoute>
               }
-            /> */}
-            {/* <Route
+            />
+            <Route
               path="/login"
               element={
                 <RestrictedRoute redirectTo="/contacts">
                   <LoginPage />
                 </RestrictedRoute>
               }
-            /> */}
-            {/* <Route
+            />
+            <Route
               path="/contacts"
               element={
                 <PrivateRoute>
                   <ContactsPage />
                 </PrivateRoute>
               }
-            /> */}
+            />
           </Route>
         </Routes>
       </Suspense>
@@ -59,4 +65,4 @@ function App() {
   );
 }
 
-export default App;
+export default App;export default App;
